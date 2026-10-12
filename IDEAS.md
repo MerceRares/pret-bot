@@ -26,7 +26,7 @@ What was changed in `pret_bot.rb`:
 Notes:
 
 - The workflow sets `TZ: Europe/Bucharest`, so `Time.now` is Romania time and summer/winter time is handled automatically.
-- GitHub can delay scheduled runs by a few minutes, so the noon report may arrive at 12:05–12:20.
+- GitHub can delay scheduled runs by a few minutes, so the noon report (scheduled for 12:17) may arrive a bit later.
 - You can run it manually anytime: repo → **Actions** → **pret-bot** → **Run workflow**.
 - GitHub turns off scheduled workflows in repos with no activity for 60 days. The hourly `pret.json` commits count as activity, so it should stay on.
 
