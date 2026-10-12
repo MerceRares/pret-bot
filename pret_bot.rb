@@ -4,7 +4,7 @@ require "json"
 require "net/http"
 
 # ===== CONFIGURARE =====
-URL         = "https://www.sportvision.ro/tricou/537721-nike-tricou-los-angeles-lakerss"   # pune link-ul tău
+URL         = "https://www.sportvision.ro/tricou/537721-nike-tricou-los-angeles-lakers"   # pune link-ul tău
 SELECTOR    = ".current-price .product-price-value"                # selectorul găsit la pasul 4
 FISIER_PRET = "pret.json"
 NTFY_TOPIC  = ENV.fetch("NTFY_TOPIC", "rares-preturi")
