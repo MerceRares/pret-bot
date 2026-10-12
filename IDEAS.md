@@ -10,7 +10,7 @@ Goal: get a phone notification (ntfy, topic `rares-preturi`)
 
 How it works:
 
-1. `.github/workflows/pret.yml` runs `pret_bot.rb` **every hour** on GitHub's servers.
+1. Every hour **cron-job.org** starts `.github/workflows/pret.yml`, which runs `pret_bot.rb` on GitHub's servers. (GitHub's own `schedule` was too unreliable – see CHANGES.md.)
 2. The bot compares the new price with the one saved in `pret.json`:
    - first run → "Am început să urmăresc produsul…"
    - price changed (up or down) → "Prețul s-a schimbat: 179.99 -> 159.99 lei (-20.0 lei)"
@@ -26,9 +26,7 @@ What was changed in `pret_bot.rb`:
 Notes:
 
 - The workflow sets `TZ: Europe/Bucharest`, so `Time.now` is Romania time and summer/winter time is handled automatically.
-- GitHub can delay scheduled runs by a few minutes, so the noon report (scheduled for 12:17) may arrive a bit later.
 - You can run it manually anytime: repo → **Actions** → **pret-bot** → **Run workflow**.
-- GitHub turns off scheduled workflows in repos with no activity for 60 days. The hourly `pret.json` commits count as activity, so it should stay on.
 
 ## Alternative: Windows Task Scheduler (runs on your PC)
 

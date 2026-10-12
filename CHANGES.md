@@ -106,22 +106,51 @@ The bot runs every hour, so exactly one run per day falls between 12:00 and 12:5
 
 ---
 
-## 4. Running it automatically: GitHub Actions
+## 4. Running it automatically: GitHub Actions + cron-job.org
 
-A script is only useful if something runs it regularly. We chose **GitHub Actions**: it's free for public repos and runs on GitHub's servers, so the PC can be off.
+A script is only useful if something runs it regularly. The work is split in two:
 
-The file is `.github/workflows/pret.yml`. Here it is section by section:
+- **GitHub Actions** runs the bot on GitHub's servers (free for public repos, PC can be off).
+- **cron-job.org** is the timer: every hour it tells GitHub "run the bot now".
+
+### Why not GitHub's own schedule?
+
+At first the workflow used GitHub's built-in timer:
 
 ```yaml
 on:
   schedule:
-    - cron: "17 * * * *"  # every hour, at minute 17
-  workflow_dispatch:       # adds a "Run workflow" button for manual runs
+    - cron: "17 * * * *"   # minute hour day month weekday → "minute 17 of every hour"
 ```
 
-`cron` syntax is `minute hour day month weekday`, and `*` means "any". So `17 * * * *` means "minute 17 of every hour".
+In practice it **never ran** on the first day. GitHub's `schedule` is "best effort": a new workflow can take hours before its schedule starts, and runs get delayed or skipped when GitHub is busy (especially at `:00`). For a report that must arrive at 12:00, that's not good enough.
 
-**Why minute 17 and not 0?** Most workflows in the world are scheduled at `:00`, so GitHub is overloaded then and often delays or even skips runs. GitHub's own docs recommend picking a different minute. In our first test, the `:00` run was skipped, so we moved it to `:17`.
+A manual start (`workflow_dispatch`) is handled right away, so we let an external timer press that button for us:
+
+```yaml
+on:
+  workflow_dispatch:   # started every hour by cron-job.org (or manually from the Actions tab)
+```
+
+### How cron-job.org starts the workflow
+
+Every hour cron-job.org sends this HTTP request to GitHub's API:
+
+```
+POST https://api.github.com/repos/MerceRares/pret-bot/actions/workflows/pret.yml/dispatches
+Authorization: Bearer <token>
+Accept: application/vnd.github+json
+X-GitHub-Api-Version: 2022-11-28
+
+{"ref":"main"}
+```
+
+- `ref: main` = which branch to run.
+- The **token** is a limited password created on GitHub (fine-grained personal access token) that only allows *Actions: Read and write* on this one repo. It is stored only in cron-job.org, **never in the code**: the repo is public, and anyone could use a committed token.
+
+### The workflow file, section by section
+
+The file is `.github/workflows/pret.yml`.
 
 ```yaml
 permissions:
@@ -161,7 +190,7 @@ This lets the workflow push commits to the repo (needed below).
 **Why commit `pret.json`?** Every GitHub Actions run starts on a **fresh, empty machine**. Files written during a run disappear afterwards. To remember the last price between runs, the workflow commits `pret.json` back to the repo. The next run's `checkout` downloads it again.
 
 - `|| echo "No change"` stops the step from failing if there's nothing to commit.
-- A side effect is a small commit every hour. That's fine, and it also counts as repo activity: GitHub disables scheduled workflows in repos with no activity for 60 days.
+- A side effect is a small commit every hour. That's fine.
 
 ### The checkout v4 → v5 update
 
@@ -179,6 +208,7 @@ The first run succeeded but showed a warning: `actions/checkout@v4` runs on Node
   4. Use actions/checkout@v5
   5. Fix product URL
   6. Run at minute 17 + this CHANGES.md
+  7. Remove GitHub's schedule, start the workflow from cron-job.org instead
   - plus automatic "Update price" commits from the bot itself
 
 **Watch out:** the bot pushes to GitHub every hour, so your local copy is often behind. Always run `git pull` before you start working, or your `git push` will be rejected.
@@ -191,7 +221,7 @@ The first run succeeded but showed a warning: `actions/checkout@v4` runs on Node
 |---|---|
 | `pret_bot.rb` | The bot itself |
 | `pret.json` | The last known price (the bot's "memory") |
-| `.github/workflows/pret.yml` | Runs the bot every hour on GitHub |
+| `.github/workflows/pret.yml` | Runs the bot on GitHub (started every hour by cron-job.org) |
 | `Gemfile` / `Gemfile.lock` | Ruby gems used (`httparty`, `nokogiri`) |
 | `test_selector.rb` | Helper script used to find the right CSS selector for the price |
 | `IDEAS.md` | Ideas for future features |
@@ -203,7 +233,7 @@ The first run succeeded but showed a warning: `actions/checkout@v4` runs on Node
 
 - **The ntfy topic is public.** Anyone who reads the repo can send notifications to the phone. A better approach is to store it as a GitHub secret (see `IDEAS.md`).
 - **If the site changes its HTML**, the selector may stop matching and the run will fail (red X in the Actions tab). The bot doesn't send an alert in that case yet.
-- **GitHub can delay scheduled runs**, so the noon report (scheduled for 12:17) may arrive a bit later. In rare cases a delayed run can miss the 12:xx hour and skip the report that day.
+- **The token expires.** When it does, cron-job.org's requests fail (it shows errors and can email you) and the bot stops running. Create a new token and paste it into cron-job.org.
 - **Only one product** is tracked. `IDEAS.md` describes how to track several.
 
 ## 8. How to test
