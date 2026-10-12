@@ -1,7 +1,7 @@
 # pret-bot – Ideas for notifications
 
 Goal: get a phone notification (ntfy, topic `rares-preturi`)
-- **every day at 12:00 AM (midnight)** with the current price, and
+- **every day at 12:00 (noon)** with the current price, and
 - **whenever the price changes** (up or down).
 
 ---
@@ -28,7 +28,7 @@ def notifica(mesaj, titlu = "Pret schimbat")
   "Title" => titlu,
 ```
 
-## 2. Daily price report at midnight
+## 2. Daily price report at noon
 
 Add a "daily report" mode that always sends the current price, even if it didn't change:
 
@@ -50,7 +50,7 @@ The bot only works when something runs it. Choose one option:
 
 ### Option A – Windows Task Scheduler (easiest, runs on your PC)
 
-- Task 1: every day at **00:00** → `bundle exec ruby pret_bot.rb --zilnic`
+- Task 1: every day at **12:00** → `bundle exec ruby pret_bot.rb --zilnic`
 - Task 2: every **1 hour** → `bundle exec ruby pret_bot.rb` (catches price changes)
 
 Downside: the PC must be on.
@@ -64,7 +64,7 @@ name: pret-bot
 on:
   schedule:
     - cron: "0 * * * *"     # every hour – check for price changes
-    - cron: "0 21 * * *"    # 21:00 UTC = 00:00 Romania (summer time, UTC+3)
+    - cron: "0 9 * * *"     # 09:00 UTC = 12:00 Romania (summer time, UTC+3)
   workflow_dispatch:         # lets you run it manually from GitHub
 
 permissions:
@@ -81,7 +81,7 @@ jobs:
           bundler-cache: true
       - name: Check price
         run: |
-          if [ "${{ github.event.schedule }}" = "0 21 * * *" ]; then
+          if [ "${{ github.event.schedule }}" = "0 9 * * *" ]; then
             bundle exec ruby pret_bot.rb --zilnic
           else
             bundle exec ruby pret_bot.rb
@@ -96,8 +96,8 @@ jobs:
 ```
 
 Notes:
-- GitHub cron uses **UTC**. Romania is UTC+3 in summer and UTC+2 in winter, so midnight is `0 21 * * *` in summer and `0 22 * * *` in winter.
-- GitHub can delay scheduled runs by a few minutes, so "00:00" may arrive at 00:05–00:15.
+- GitHub cron uses **UTC**. Romania is UTC+3 in summer and UTC+2 in winter, so noon is `0 9 * * *` in summer and `0 10 * * *` in winter.
+- GitHub can delay scheduled runs by a few minutes, so "12:00" may arrive at 12:05–12:15.
 - `pret.json` gets committed back to the repo so the bot remembers the last price.
 - GitHub turns off scheduled workflows in repos with no activity for 60 days. The hourly commits when the price changes help, but you may need to re-enable it sometimes.
 
