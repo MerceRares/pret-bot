@@ -52,10 +52,10 @@ def salveaza_pret(pret)
 end
 
 # ===== 4. Notificare pe telefon =====
-def notifica(mesaj)
+def notifica(mesaj, titlu = "Pret schimbat")
   uri = URI("https://ntfy.sh/#{NTFY_TOPIC}")
   Net::HTTP.post(uri, mesaj, {
-    "Title" => "Pret scazut!",
+    "Title" => titlu,
     "Tags"  => "moneybag",
     "Click" => URL            # atingi notificarea și se deschide produsul
   })
@@ -69,11 +69,17 @@ puts "Preț vechi: #{pret_vechi.inspect} | Preț nou: #{pret_nou}"
 
 if pret_vechi.nil?
   notifica("Am început să urmăresc produsul. Preț actual: #{pret_nou} lei")
-elsif pret_nou < pret_vechi
-  diferenta = (pret_vechi - pret_nou).round(2)
-  notifica("A scăzut de la #{pret_vechi} la #{pret_nou} lei (-#{diferenta} lei)")
+elsif pret_nou != pret_vechi
+  diferenta = (pret_nou - pret_vechi).round(2)
+  semn = diferenta > 0 ? "+" : ""
+  notifica("Prețul s-a schimbat: #{pret_vechi} -> #{pret_nou} lei (#{semn}#{diferenta} lei)")
 else
-  puts "Nicio scădere de preț."
+  puts "Prețul nu s-a schimbat."
+end
+
+# Raport zilnic la ora 12 (ora României)
+if Time.now.hour == 12
+  notifica("Prețul de azi: #{pret_nou} lei", "Raport zilnic")
 end
 
 salveaza_pret(pret_nou)

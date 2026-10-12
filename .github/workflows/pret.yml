@@ -1,0 +1,33 @@
+name: pret-bot
+
+on:
+  schedule:
+    - cron: "0 * * * *"   # every hour
+  workflow_dispatch:       # run manually from the Actions tab
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    env:
+      TZ: Europe/Bucharest   # so the bot sees Romania time (12:00 report)
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+
+      - name: Check price
+        run: bundle exec ruby pret_bot.rb
+
+      - name: Save new price
+        run: |
+          git config user.name "pret-bot"
+          git config user.email "pret-bot@users.noreply.github.com"
+          git add pret.json
+          git commit -m "Update price" || echo "No change"
+          git push
