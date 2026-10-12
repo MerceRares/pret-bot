@@ -77,8 +77,8 @@ else
   puts "Prețul nu s-a schimbat."
 end
 
-# Raport zilnic la ora 12 (ora României)
-if Time.now.hour == 12
+# Raport zilnic la 13:45 (cron-job.org pornește bot-ul la minutul 45 al fiecărei ore)
+if Time.now.hour == 13
   notifica("Prețul de azi: #{pret_nou} lei", "Raport zilnic")
 end
 

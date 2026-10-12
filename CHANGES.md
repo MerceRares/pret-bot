@@ -92,17 +92,17 @@ The URL ended in `...los-angeles-lakerss` (extra `s`). It still worked because t
 
 ---
 
-## 3. New feature: daily report at 12:00
+## 3. New feature: daily report at 13:45
 
-Besides change notifications, we wanted a report every day at noon with the current price, even when nothing changed:
+Besides change notifications, we wanted a report every day at 13:45 with the current price, even when nothing changed (it was 12:00 at first, then moved to 13:45):
 
 ```ruby
-if Time.now.hour == 12
+if Time.now.hour == 13
   notifica("Prețul de azi: #{pret_nou} lei", "Raport zilnic")
 end
 ```
 
-The bot runs every hour, so exactly one run per day falls between 12:00 and 12:59, and that run sends the report. This is simpler than having a separate "daily" mode or a second schedule.
+The bot runs every hour at minute 45, so exactly one run per day happens in hour 13 (at 13:45), and that run sends the report. This is simpler than having a separate "daily" mode or a second schedule.
 
 ---
 
@@ -111,7 +111,7 @@ The bot runs every hour, so exactly one run per day falls between 12:00 and 12:5
 A script is only useful if something runs it regularly. The work is split in two:
 
 - **GitHub Actions** runs the bot on GitHub's servers (free for public repos, PC can be off).
-- **cron-job.org** is the timer: every hour it tells GitHub "run the bot now".
+- **cron-job.org** is the timer: every hour at minute 45 (`45 * * * *`) it tells GitHub "run the bot now".
 
 ### Why not GitHub's own schedule?
 
@@ -123,7 +123,7 @@ on:
     - cron: "17 * * * *"   # minute hour day month weekday → "minute 17 of every hour"
 ```
 
-In practice it **never ran** on the first day. GitHub's `schedule` is "best effort": a new workflow can take hours before its schedule starts, and runs get delayed or skipped when GitHub is busy (especially at `:00`). For a report that must arrive at 12:00, that's not good enough.
+In practice it **never ran** on the first day. GitHub's `schedule` is "best effort": a new workflow can take hours before its schedule starts, and runs get delayed or skipped when GitHub is busy (especially at `:00`). For a report that must arrive at an exact time, that's not good enough.
 
 A manual start (`workflow_dispatch`) is handled right away, so we let an external timer press that button for us:
 
@@ -164,7 +164,7 @@ This lets the workflow push commits to the repo (needed below).
       TZ: Europe/Bucharest
 ```
 
-**Important trick:** GitHub's servers use UTC time. Setting `TZ` makes `Time.now` in Ruby return **Romania time**, so `Time.now.hour == 12` really means noon in Romania. It also handles summer/winter time automatically. Without it we would need to change the code twice a year.
+**Important trick:** GitHub's servers use UTC time. Setting `TZ` makes `Time.now` in Ruby return **Romania time**, so `Time.now.hour == 13` really means 13:xx in Romania. It also handles summer/winter time automatically. Without it we would need to change the code twice a year.
 
 ```yaml
     steps:
@@ -209,6 +209,7 @@ The first run succeeded but showed a warning: `actions/checkout@v4` runs on Node
   5. Fix product URL
   6. Run at minute 17 + this CHANGES.md
   7. Remove GitHub's schedule, start the workflow from cron-job.org instead
+  8. Daily report at 13:45 (cron-job.org runs at minute 45 of every hour)
   - plus automatic "Update price" commits from the bot itself
 
 **Watch out:** the bot pushes to GitHub every hour, so your local copy is often behind. Always run `git pull` before you start working, or your `git push` will be rejected.

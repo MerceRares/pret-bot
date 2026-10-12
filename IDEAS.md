@@ -1,7 +1,7 @@
 # pret-bot – Ideas for notifications
 
 Goal: get a phone notification (ntfy, topic `rares-preturi`)
-- **every day at 12:00 (noon)** with the current price, and
+- **every day at 13:45** with the current price, and
 - **whenever the price changes** (up or down).
 
 ---
@@ -10,18 +10,18 @@ Goal: get a phone notification (ntfy, topic `rares-preturi`)
 
 How it works:
 
-1. Every hour **cron-job.org** starts `.github/workflows/pret.yml`, which runs `pret_bot.rb` on GitHub's servers. (GitHub's own `schedule` was too unreliable – see CHANGES.md.)
+1. Every hour at minute 45 (`45 * * * *`) **cron-job.org** starts `.github/workflows/pret.yml`, which runs `pret_bot.rb` on GitHub's servers. (GitHub's own `schedule` was too unreliable – see CHANGES.md.)
 2. The bot compares the new price with the one saved in `pret.json`:
    - first run → "Am început să urmăresc produsul…"
    - price changed (up or down) → "Prețul s-a schimbat: 179.99 -> 159.99 lei (-20.0 lei)"
-3. If the run happens at **12:xx Romania time**, it also sends "Prețul de azi: … lei" (title "Raport zilnic").
+3. On the **13:45** run (Romania time), it also sends "Prețul de azi: … lei" (title "Raport zilnic").
 4. The workflow commits `pret.json` back to the repo so the next run remembers the last price.
 
 What was changed in `pret_bot.rb`:
 
 - `notifica(mesaj, titlu = "Pret schimbat")` – the title is now a parameter.
 - `pret_nou < pret_vechi` → `pret_nou != pret_vechi` – notifies on any change.
-- `if Time.now.hour == 12` – sends the daily report.
+- `if Time.now.hour == 13` – sends the daily report (the run at 13:45).
 
 Notes:
 
@@ -30,7 +30,7 @@ Notes:
 
 ## Alternative: Windows Task Scheduler (runs on your PC)
 
-Create a task that runs `bundle exec ruby pret_bot.rb` in this folder **every hour**. The noon report works the same way. Downside: the PC must be on.
+Create a task that runs `bundle exec ruby pret_bot.rb` in this folder **every hour at minute 45**. The 13:45 report works the same way. Downside: the PC must be on.
 
 ## More ideas
 
