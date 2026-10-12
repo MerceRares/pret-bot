@@ -1,0 +1,3 @@
+-always code in the easiest and simpliest way possible
+-always generate migrations via command not hardcode migration filename
+-read existing code and pattern when coding similar features
