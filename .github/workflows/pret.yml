@@ -1,4 +1,4 @@
-name: pret-bot
+﻿name: pret-bot
 
 on:
   schedule:
@@ -14,7 +14,7 @@ jobs:
     env:
       TZ: Europe/Bucharest   # so the bot sees Romania time (12:00 report)
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - uses: ruby/setup-ruby@v1
         with:
