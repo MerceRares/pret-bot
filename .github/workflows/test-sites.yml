@@ -1,0 +1,49 @@
+# TEMPORARY: checks if ritmo.ro lets GitHub's servers in. Delete after the test.
+name: test-sites
+
+on:
+  push:
+    paths:
+      - .github/workflows/test-sites.yml
+
+permissions:
+  contents: write
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Test ritmo.ro
+        run: |
+          UA="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+          {
+            echo "Test run on GitHub server: $(date -u '+%Y-%m-%d %H:%M UTC')"
+            for url in \
+              "https://www.ritmo.ro/cafe-cult/cafea-boabe-chocolate-orange-100-arabica-250g-cafe-cult.html" \
+              "https://www.ritmo.ro/cafe-cult/cafea-boabe-chocolate-orange-100-arabica-1kg-cafe-cult.html" \
+              "https://www.ritmo.ro/cafe-cult/cafea-boabe-pistachio-cream-250-gr.html" \
+              "https://www.ritmo.ro/cafe-cult/cafea-fistic-ciocolata-stil-dubai-250g.html" \
+              "https://www.ritmo.ro/cafe-cult/cafea-boabe-turkish-honey-100-arabica-250g-cafe-cult.html" \
+              "https://www.ritmo.ro/cafe-cult/cafea-boabe-aromatizata-sweet-orange-vanilla-250-gr.html" \
+              "https://www.ritmo.ro/cafe-cult/cafea-boabe-chili-chocolate-250-gr-cafecult.html"
+            do
+              cod=$(curl -s -L -m 25 --compressed -o p.html -w "%{http_code}" "$url" \
+                -H "User-Agent: $UA" \
+                -H "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8" \
+                -H "Accept-Language: ro-RO,ro;q=0.9,en;q=0.8" -H "Sec-Fetch-Mode: navigate" \
+                -H "Sec-Fetch-Dest: document" -H "Sec-Fetch-Site: none" -H "Upgrade-Insecure-Requests: 1")
+              pret=$(grep -oE 'fPrice[^>]*>[^<]*' p.html | head -1 | sed 's/.*>//' | tr -s ' \t\n' ' ')
+              echo "HTTP $cod | pret: $pret | $url"
+            done
+          } | tee test-sites-result.txt
+
+      - name: Save result
+        run: |
+          git config user.name "pret-bot"
+          git config user.email "pret-bot@users.noreply.github.com"
+          git add test-sites-result.txt
+          git commit -m "Test sites result"
+          git pull --rebase
+          git push
