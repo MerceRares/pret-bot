@@ -92,17 +92,17 @@ The URL ended in `...los-angeles-lakerss` (extra `s`). It still worked because t
 
 ---
 
-## 3. New feature: daily report at 13:45
+## 3. New feature: daily report at 12:17
 
-Besides change notifications, we wanted a report every day at 13:45 with the current price, even when nothing changed (it was 12:00 at first, then moved to 13:45):
+Besides change notifications, we wanted a report every day at 12:17 with the current price, even when nothing changed (it was 12:00 at first, then 13:45, now 12:17):
 
 ```ruby
-if Time.now.hour == 13
+if Time.now.hour == 12
   notifica("Prețul de azi: #{pret_nou} lei", "Raport zilnic")
 end
 ```
 
-The bot runs every hour at minute 45, so exactly one run per day happens in hour 13 (at 13:45), and that run sends the report. This is simpler than having a separate "daily" mode or a second schedule.
+The bot runs every hour at minute 17, so exactly one run per day happens in hour 12 (at 12:17), and that run sends the report. This is simpler than having a separate "daily" mode or a second schedule.
 
 ---
 
@@ -111,7 +111,7 @@ The bot runs every hour at minute 45, so exactly one run per day happens in hour
 A script is only useful if something runs it regularly. The work is split in two:
 
 - **GitHub Actions** runs the bot on GitHub's servers (free for public repos, PC can be off).
-- **cron-job.org** is the timer: every hour at minute 45 (`45 * * * *`) it tells GitHub "run the bot now".
+- **cron-job.org** is the timer: every hour at minute 17 (`17 * * * *`) it tells GitHub "run the bot now".
 
 ### Why not GitHub's own schedule?
 
@@ -164,7 +164,7 @@ This lets the workflow push commits to the repo (needed below).
       TZ: Europe/Bucharest
 ```
 
-**Important trick:** GitHub's servers use UTC time. Setting `TZ` makes `Time.now` in Ruby return **Romania time**, so `Time.now.hour == 13` really means 13:xx in Romania. It also handles summer/winter time automatically. Without it we would need to change the code twice a year.
+**Important trick:** GitHub's servers use UTC time. Setting `TZ` makes `Time.now` in Ruby return **Romania time**, so `Time.now.hour == 12` really means 12:xx in Romania. It also handles summer/winter time automatically. Without it we would need to change the code twice a year.
 
 ```yaml
     steps:
@@ -210,6 +210,8 @@ The first run succeeded but showed a warning: `actions/checkout@v4` runs on Node
   6. Run at minute 17 + this CHANGES.md
   7. Remove GitHub's schedule, start the workflow from cron-job.org instead
   8. Daily report at 13:45 (cron-job.org runs at minute 45 of every hour)
+  9. Error alert when the price can't be read
+  10. Daily report moved to 12:17 (cron-job.org runs at minute 17 of every hour)
   - plus automatic "Update price" commits from the bot itself
 
 **Watch out:** the bot pushes to GitHub every hour, so your local copy is often behind. Always run `git pull` before you start working, or your `git push` will be rejected.
