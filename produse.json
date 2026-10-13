@@ -1,5 +1,22 @@
 [
   { "nume": "Tricou Lakers", "url": "https://www.sportvision.ro/tricou/537721-nike-tricou-los-angeles-lakers" },
   { "nume": "Tricou Celtics", "url": "https://www.sportvision.ro/tricou/492270-nike-tricou-boston-celtics" },
-  { "nume": "Tricou Romania Joma", "url": "https://www.intersport.ro/barbati/imbracaminte/bluze-si-tricouri-barbati/tricouri-cu-maneca-scurta-barbati/joma-tricou-fed.romana-de-fotbal-replica-opt-h_970107/", "selector": ".current-price-container .current-price" }
+  { "nume": "Tricou Romania Joma", "url": "https://www.intersport.ro/barbati/imbracaminte/bluze-si-tricouri-barbati/tricouri-cu-maneca-scurta-barbati/joma-tricou-fed.romana-de-fotbal-replica-opt-h_970107/", "selector": ".current-price-container .current-price" },
+  { "nume": "Cafea Caramel Choco 250g", "url": "https://www.ritmo.ro/cafe-cult/cafea-boabe-aromatizata-caramel-choco-250-gr.html", "selector": ".detail-price .fPrice" },
+  { "nume": "Cafea Gingerbread", "url": "https://www.ritmo.ro/cafe-cult/cafea-boabe-aromatizata-gingerbread.html", "selector": ".detail-price .fPrice" },
+  { "nume": "Cafea Sweet Orange Vanilla 250g", "url": "https://www.ritmo.ro/cafe-cult/cafea-boabe-aromatizata-sweet-orange-vanilla-250-gr.html", "selector": ".detail-price .fPrice" },
+  { "nume": "Cafea Chili Chocolate 250g", "url": "https://www.ritmo.ro/cafe-cult/cafea-boabe-chili-chocolate-250-gr-cafecult.html", "selector": ".detail-price .fPrice" },
+  { "nume": "Cafea Chocolate Orange 1kg", "url": "https://www.ritmo.ro/cafe-cult/cafea-boabe-chocolate-orange-100-arabica-1kg-cafe-cult.html", "selector": ".detail-price .fPrice" },
+  { "nume": "Cafea Chocolate Orange 250g", "url": "https://www.ritmo.ro/cafe-cult/cafea-boabe-chocolate-orange-100-arabica-250g-cafe-cult.html", "selector": ".detail-price .fPrice" },
+  { "nume": "Cafea Chocolate Rum 250g", "url": "https://www.ritmo.ro/cafe-cult/cafea-boabe-chocolate-rum-100-arabica-250g-cafe-cult.html", "selector": ".detail-price .fPrice" },
+  { "nume": "Cafea English Caramel 250g", "url": "https://www.ritmo.ro/cafe-cult/cafea-boabe-english-caramel-250-gr.html", "selector": ".detail-price .fPrice" },
+  { "nume": "Cafea Happy Hazelnut 1kg", "url": "https://www.ritmo.ro/cafe-cult/cafea-boabe-happy-hazelnut-1-kg.html", "selector": ".detail-price .fPrice" },
+  { "nume": "Cafea Happy Hazelnut 250g", "url": "https://www.ritmo.ro/cafe-cult/cafea-boabe-happy-hazelnut-100-arabica-250g-cafe-cult.html", "selector": ".detail-price .fPrice" },
+  { "nume": "Cafea Irish Cream 1kg", "url": "https://www.ritmo.ro/cafe-cult/cafea-boabe-irish-cream-100-arabica-1kg-cafe-cult.html", "selector": ".detail-price .fPrice" },
+  { "nume": "Cafea Irish Cream 250g", "url": "https://www.ritmo.ro/cafe-cult/cafea-boabe-irish-cream-250-gr.html", "selector": ".detail-price .fPrice" },
+  { "nume": "Cafea Hazelnut Cinnamon 250g", "url": "https://www.ritmo.ro/cafe-cult/cafea-boabe-macinata-hazelnut-cinnamon-100-arabica-250g-cafe-cult.html", "selector": ".detail-price .fPrice" },
+  { "nume": "Cafea Pistachio Cream 250g", "url": "https://www.ritmo.ro/cafe-cult/cafea-boabe-pistachio-cream-250-gr.html", "selector": ".detail-price .fPrice" },
+  { "nume": "Cafea Strawberry Cheesecake 250g", "url": "https://www.ritmo.ro/cafe-cult/cafea-boabe-strawberry-cheesecake-100-arabica-250g-cafe-cult.html", "selector": ".detail-price .fPrice" },
+  { "nume": "Cafea Turkish Honey 250g", "url": "https://www.ritmo.ro/cafe-cult/cafea-boabe-turkish-honey-100-arabica-250g-cafe-cult.html", "selector": ".detail-price .fPrice" },
+  { "nume": "Cafea Pistachio Dubai 250g", "url": "https://www.ritmo.ro/cafe-cult/cafea-fistic-ciocolata-stil-dubai-250g.html", "selector": ".detail-price .fPrice" }
 ]
