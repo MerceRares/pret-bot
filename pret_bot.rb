@@ -5,7 +5,7 @@ require "net/http"
 
 # ===== CONFIGURARE =====
 FISIER_PRODUSE = "produse.json"                          # lista de produse urmărite
-SELECTOR       = ".current-price .product-price-value"   # selectorul prețului pe sportvision.ro
+SELECTOR       = ".current-price .product-price-value"   # selectorul implicit (sportvision.ro); alt site → "selector" în produse.json
 FISIER_PRET    = "pret.json"
 NTFY_TOPIC     = ENV.fetch("NTFY_TOPIC", "rares-preturi")
 
@@ -13,9 +13,15 @@ NTFY_TOPIC     = ENV.fetch("NTFY_TOPIC", "rares-preturi")
 def descarca_pagina(url)
   raspuns = HTTParty.get(
     url,
+    # antete ca ale unui browser real, altfel unele site-uri (ex. sportisimo.ro) răspund cu 403
     headers: {
-      "User-Agent"      => "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0 Safari/537.36",
-      "Accept-Language" => "ro-RO,ro;q=0.9"
+      "User-Agent"                => "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36",
+      "Accept"                    => "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+      "Accept-Language"           => "ro-RO,ro;q=0.9,en;q=0.8",
+      "Sec-Fetch-Mode"            => "navigate",
+      "Sec-Fetch-Dest"            => "document",
+      "Sec-Fetch-Site"            => "none",
+      "Upgrade-Insecure-Requests" => "1"
     },
     timeout: 20
   )
@@ -24,7 +30,7 @@ def descarca_pagina(url)
 end
 
 # ===== 2. Extrage prețul =====
-def extrage_pret(html)
+def extrage_pret(html, selector)
   doc = Nokogiri::HTML(html)
 
   # Varianta 1: tag-ul ascuns cu prețul curat
@@ -32,7 +38,7 @@ def extrage_pret(html)
   return meta["content"].to_f if meta && meta["content"]
 
   # Varianta 2: elementul vizibil, ex. "1.299,99 Lei"
-  element = doc.at_css(SELECTOR)
+  element = doc.at_css(selector)
   raise "Nu am găsit prețul. Verifică selectorul!" if element.nil?
 
   text = element.text.strip
@@ -69,7 +75,7 @@ produse.each do |produs|
   url  = produs["url"]
 
   begin
-    pret_nou = extrage_pret(descarca_pagina(url))
+    pret_nou = extrage_pret(descarca_pagina(url), produs["selector"] || SELECTOR)
     raise "Prețul citit nu e valid (#{pret_nou})" if pret_nou <= 0
   rescue => e
     notifica("#{nume}: bot-ul nu a găsit prețul. Eroare: #{e.message}", "Bot-ul are o problema", url)
