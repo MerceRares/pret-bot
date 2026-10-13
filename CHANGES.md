@@ -212,6 +212,7 @@ The first run succeeded but showed a warning: `actions/checkout@v4` runs on Node
   8. Daily report at 13:45 (cron-job.org runs at minute 45 of every hour)
   9. Error alert when the price can't be read
   10. Daily report moved to 12:17 (cron-job.org runs at minute 17 of every hour)
+  11. Track several products from `produse.json`
   - plus automatic "Update price" commits from the bot itself
 
 **Watch out:** the bot pushes to GitHub every hour, so your local copy is often behind. Always run `git pull` before you start working, or your `git push` will be rejected.
@@ -223,7 +224,8 @@ The first run succeeded but showed a warning: `actions/checkout@v4` runs on Node
 | File | Purpose |
 |---|---|
 | `pret_bot.rb` | The bot itself |
-| `pret.json` | The last known price (the bot's "memory") |
+| `produse.json` | The list of products to track (name + link) |
+| `pret.json` | The last known price of each product (the bot's "memory") |
 | `.github/workflows/pret.yml` | Runs the bot on GitHub (started every hour by cron-job.org) |
 | `Gemfile` / `Gemfile.lock` | Ruby gems used (`httparty`, `nokogiri`) |
 | `test_selector.rb` | Helper script used to find the right CSS selector for the price |
