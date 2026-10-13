@@ -1,0 +1,8 @@
+Test run on GitHub server: 2026-10-13 09:16 UTC
+HTTP 200 | pret:   | https://www.ritmo.ro/cafe-cult/cafea-boabe-chocolate-orange-100-arabica-250g-cafe-cult.html
+HTTP 200 | pret:   | https://www.ritmo.ro/cafe-cult/cafea-boabe-chocolate-orange-100-arabica-1kg-cafe-cult.html
+HTTP 200 | pret:   | https://www.ritmo.ro/cafe-cult/cafea-boabe-pistachio-cream-250-gr.html
+HTTP 200 | pret:   | https://www.ritmo.ro/cafe-cult/cafea-fistic-ciocolata-stil-dubai-250g.html
+HTTP 200 | pret:   | https://www.ritmo.ro/cafe-cult/cafea-boabe-turkish-honey-100-arabica-250g-cafe-cult.html
+HTTP 200 | pret:   | https://www.ritmo.ro/cafe-cult/cafea-boabe-aromatizata-sweet-orange-vanilla-250-gr.html
+HTTP 200 | pret:   | https://www.ritmo.ro/cafe-cult/cafea-boabe-chili-chocolate-250-gr-cafecult.html
