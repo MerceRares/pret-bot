@@ -1,12 +1,5 @@
 [
   { "nume": "Tricou Lakers", "url": "https://www.sportvision.ro/tricou/537721-nike-tricou-los-angeles-lakers" },
   { "nume": "Tricou Celtics", "url": "https://www.sportvision.ro/tricou/492270-nike-tricou-boston-celtics" },
-  { "nume": "Cafea Ciocolata-Portocale 250g", "url": "https://www.emag.ro/cafea-boabe-aromatizata-cafe-cult-ciocolata-portocale-250-g-12402/pd/D549RFMBM/", "selector": ".pricing-block .product-new-price" },
-  { "nume": "Cafea Ciocolata-Portocale 1kg", "url": "https://www.emag.ro/cafea-boabe-aromatizata-ciocolata-portocale-cafe-cult-1-kg-12404/pd/DXW023YBM/", "selector": ".pricing-block .product-new-price" },
-  { "nume": "Cafea Chocolate Cream 250g", "url": "https://www.emag.ro/cafea-aromata-chocolate-cream-cafe-cult-boabe-250gr-12162/pd/DP8Q9X2BM/", "selector": ".pricing-block .product-new-price" },
-  { "nume": "Cafea Fistic 250g", "url": "https://www.emag.ro/cafea-boabe-aromatizata-cafe-cult-fistic-250-g-15222/pd/D649RFMBM/", "selector": ".pricing-block .product-new-price" },
-  { "nume": "Cafea Turkish Delight 250g", "url": "https://www.emag.ro/cafea-boabe-aromatizata-cafe-cult-turkish-delight-250-g-12342/pd/DYJX0J3BM/", "selector": ".pricing-block .product-new-price" },
-  { "nume": "Cafea Sweet Orange Vanilla 250g", "url": "https://www.emag.ro/cafea-boabe-aromatizata-cafecult-sweet-orange-vanilla-250-gr-14432/pd/DDV3K32BM/", "selector": ".pricing-block .product-new-price" },
-  { "nume": "Cafea Ciocolata-Chili 250g", "url": "https://www.emag.ro/cafea-boabe-aromatizata-cafe-cult-ciocolata-si-chili-250-g-12602/pd/D94JHGYBM/", "selector": ".pricing-block .product-new-price" },
   { "nume": "Tricou Romania Joma", "url": "https://www.intersport.ro/barbati/imbracaminte/bluze-si-tricouri-barbati/tricouri-cu-maneca-scurta-barbati/joma-tricou-fed.romana-de-fotbal-replica-opt-h_970107/", "selector": ".current-price-container .current-price" }
 ]
