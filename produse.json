@@ -1,5 +1,6 @@
 [
   { "nume": "Tricou Lakers", "url": "https://www.sportvision.ro/tricou/537721-nike-tricou-los-angeles-lakers" },
   { "nume": "Tricou Celtics", "url": "https://www.sportvision.ro/tricou/492270-nike-tricou-boston-celtics" },
-  { "nume": "Cafea Cafe Cult", "url": "https://www.emag.ro/cafea-boabe-aromatizata-cafe-cult-ciocolata-portocale-250-g-12402/pd/D549RFMBM/", "selector": ".pricing-block .product-new-price" }
+  { "nume": "Cafea Cafe Cult 250g", "url": "https://www.emag.ro/cafea-boabe-aromatizata-cafe-cult-ciocolata-portocale-250-g-12402/pd/D549RFMBM/", "selector": ".pricing-block .product-new-price" },
+  { "nume": "Cafea Cafe Cult 1kg", "url": "https://www.emag.ro/cafea-boabe-aromatizata-ciocolata-portocale-cafe-cult-1-kg-12404/pd/DXW023YBM/", "selector": ".pricing-block .product-new-price" }
 ]
