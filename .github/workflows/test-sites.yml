@@ -34,7 +34,7 @@ jobs:
                 -H "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8" \
                 -H "Accept-Language: ro-RO,ro;q=0.9,en;q=0.8" -H "Sec-Fetch-Mode: navigate" \
                 -H "Sec-Fetch-Dest: document" -H "Sec-Fetch-Site: none" -H "Upgrade-Insecure-Requests: 1")
-              pret=$(grep -oE 'fPrice[^>]*>[^<]*' p.html | head -1 | sed 's/.*>//' | tr -s ' \t\n' ' ')
+              pret=$(grep -A1 'class="fPrice' p.html | head -2 | tr -d '\n\t' | sed 's/.*>//')
               echo "HTTP $cod | pret: $pret | $url"
             done
           } | tee test-sites-result.txt
