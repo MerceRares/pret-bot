@@ -62,7 +62,14 @@ def notifica(mesaj, titlu = "Pret schimbat")
 end
 
 # ===== PROGRAMUL PRINCIPAL =====
-pret_nou   = extrage_pret(descarca_pagina(URL))
+begin
+  pret_nou = extrage_pret(descarca_pagina(URL))
+  raise "Prețul citit nu e valid (#{pret_nou})" if pret_nou <= 0
+rescue => e
+  notifica("Bot-ul nu a găsit prețul. Eroare: #{e.message}", "Bot-ul are o problema")
+  exit 1
+end
+
 pret_vechi = citeste_pret_vechi
 
 puts "Preț vechi: #{pret_vechi.inspect} | Preț nou: #{pret_nou}"
