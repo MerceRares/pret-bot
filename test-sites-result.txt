@@ -1,0 +1,29 @@
+Test run on GitHub server: 2026-10-13 09:00 UTC
+
+https://www.sportvision.ro/
+  PLAIN : HTTP 200 | 241809 bytes | Sport Vision - Încălțăminte și echipamente sportive | S
+  CHROME: 617975 bytes | Sport Vision - Încălțăminte și echipamente sportive | S
+https://www.emag.ro/
+  PLAIN : HTTP 511 | 2991 bytes | eMAG Captcha
+  CHROME: 3363 bytes | eMAG Captcha
+https://www.sportisimo.ro/
+  PLAIN : HTTP 403 | 5780 bytes | Just a moment...
+  CHROME: 778653 bytes | SPORTISIMO | TOTUL PENTRU SPORT ȘI TIMP LIBER! | SPORTISIMO
+https://mediagalaxy.ro/
+  PLAIN : HTTP 429 | 691 bytes | <TITLE>Access Denied
+  CHROME: 692 bytes | Access Denied
+https://altex.ro/home/
+  PLAIN : HTTP 200 | 1156682 bytes | Electronice si electrocasnice online la cel mai mic pret
+  CHROME: 1304741 bytes | Electronice si electrocasnice online la cel mai mic pret
+https://www.temu.com/ro-en
+  PLAIN : HTTP 200 | 303755 bytes | Temu Romania | Explore the Latest Clothing, Beauty, Home, Je
+  CHROME: 212964 bytes | Security verification
+https://ro.shein.com/
+  PLAIN : HTTP 200 | 1126845 bytes | Îmbrăcăminte pentru femei și bărbați. Cumpără online
+  CHROME: 2519991 bytes | Women's &amp; Men's Clothing, Shop Online Fashion | SHEIN
+https://www.decathlon.ro/
+  PLAIN : HTTP 403 | 5758 bytes | Just a moment...
+  CHROME: 28814 bytes | Just a moment...
+https://www.pcgarage.ro/
+  PLAIN : HTTP 403 | 5736 bytes | Just a moment...
+  CHROME: 28767 bytes | Just a moment...
