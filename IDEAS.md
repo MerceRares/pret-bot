@@ -1,6 +1,6 @@
 # pret-bot – Ideas for notifications
 
-Goal: get a phone notification (ntfy, topic `rares-preturi`)
+Goal: get a phone notification (ntfy, topic stored in the GitHub secret `NTFY_TOPIC`)
 - **every day at 12:17** with the current price, and
 - **whenever the price changes** (up or down).
 
@@ -38,4 +38,4 @@ Create a task that runs `bundle exec ruby pret_bot.rb` in this folder **every ho
 - **Price history**: save every price with its date in `istoric.json`, and send the lowest price ever in the daily report.
 - **Target price**: notify only when the price goes under a value you choose (e.g. `PRET_TINTA = 150`).
 - **Error alerts**: if the page can't be downloaded or the selector stops working, send a notification "Bot-ul nu a găsit prețul" so you know it's broken.
-- **Private topic**: the repo is public, so anyone can see the topic `rares-preturi` and send you messages. Move the topic to a secret: in the workflow add `NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}` under `env`, and pick a harder-to-guess name.
+- **Private topic**: the repo is public, so anyone could see the topic and send you messages. Move the topic to a secret: in the workflow add `NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}` under `env`, and pick a harder-to-guess name.

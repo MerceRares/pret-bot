@@ -10,7 +10,8 @@ jobs:
   run:
     runs-on: ubuntu-latest
     env:
-      TZ: Europe/Bucharest   # so the bot sees Romania time (12:00 report)
+      TZ: Europe/Bucharest   # so the bot sees Romania time (12:17 report)
+      NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}   # the ntfy topic, kept out of the public code
     steps:
       - uses: actions/checkout@v5
 

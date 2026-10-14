@@ -23,7 +23,7 @@ It works in 5 steps:
 [ntfy.sh](https://ntfy.sh) is a free service. You send an HTTP POST to `https://ntfy.sh/<topic>`, and every phone subscribed to that topic in the ntfy app gets a notification. There's no account and no API key: **the topic name is the only "password"**.
 
 ```ruby
-Net::HTTP.post(URI("https://ntfy.sh/rares-preturi"), "message text", { "Title" => "..." })
+Net::HTTP.post(URI("https://ntfy.sh/<topic>"), "message text", { "Title" => "..." })
 ```
 
 ---
@@ -37,18 +37,18 @@ Net::HTTP.post(URI("https://ntfy.sh/rares-preturi"), "message text", { "Title" =
 **Debugging:** instead of guessing, we asked ntfy directly which messages it had received on the topic:
 
 ```
-https://ntfy.sh/rares-pret-k8x2m9/json?poll=1&since=24h
+https://ntfy.sh/<old-topic>/json?poll=1&since=24h
 ```
 
-The message was there, so the **code worked**. The problem was elsewhere: the phone was subscribed to `rares-preturi`, but the code was sending to `rares-pret-k8x2m9`.
+The message was there, so the **code worked**. The problem was elsewhere: the phone was subscribed to a different topic than the one the code was sending to.
 
 **Fix:** change the topic in `pret_bot.rb`:
 
 ```ruby
-NTFY_TOPIC = ENV.fetch("NTFY_TOPIC", "rares-preturi")
+NTFY_TOPIC = ENV.fetch("NTFY_TOPIC")
 ```
 
-`ENV.fetch("NTFY_TOPIC", "rares-preturi")` means: use the `NTFY_TOPIC` environment variable if it's set, otherwise use `"rares-preturi"`.
+`ENV.fetch("NTFY_TOPIC")` reads the topic from the `NTFY_TOPIC` environment variable. On GitHub it comes from the repository secret `NTFY_TOPIC`, so the topic name is not in the public code. `fetch` without a default stops the bot with an error if the variable is missing, instead of silently sending to a wrong topic.
 
 > **Lesson:** when "nothing happens", check each step separately (did the code send it? did the server receive it? is the phone listening?). That way you find the broken link in the chain instead of guessing.
 
@@ -251,6 +251,6 @@ The first run succeeded but showed a warning: `actions/checkout@v4` runs on Node
 - **On GitHub:** repo → **Actions** → **pret-bot** → **Run workflow**
 - **Test a notification by hand:**
   ```powershell
-  Invoke-WebRequest -Method Post -Body "test" https://ntfy.sh/rares-preturi
+  Invoke-WebRequest -Method Post -Body "test" https://ntfy.sh/<topic>
   ```
 - **Test a "price changed" notification:** edit the `"pret"` value in `pret.json` (e.g. to `200.0`), then run the bot.

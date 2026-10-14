@@ -8,7 +8,7 @@ FISIER_PRODUSE = "produse.json"                          # lista de produse urm�
 SELECTOR       = ".current-price .product-price-value"   # selectorul implicit (sportvision.ro); alt site → "selector" în produse.json
 FISIER_PRET    = "pret.json"
 FISIER_ISTORIC = "istoric.json"                          # un preț pe zi pentru fiecare produs
-NTFY_TOPIC     = ENV.fetch("NTFY_TOPIC", "rares-preturi")
+NTFY_TOPIC     = ENV.fetch("NTFY_TOPIC")                 # secret pe GitHub; local: $env:NTFY_TOPIC = "..."
 
 # ===== 1. Descarcă pagina =====
 def descarca_pagina(url)
