@@ -215,6 +215,7 @@ The first run succeeded but showed a warning: `actions/checkout@v4` runs on Node
   11. Track several products from `produse.json`
   12. Per-product CSS selector (other shops: Intersport, Ritmo)
   13. Price history in `istoric.json` + weekly summary every Sunday at 12:17
+  14. Show the site (e.g. `ritmo.ro`) in every notification; reports grouped by site
   - plus automatic "Update price" commits from the bot itself
 
 **Watch out:** the bot pushes to GitHub every hour, so your local copy is often behind. Always run `git pull` before you start working, or your `git push` will be rejected.

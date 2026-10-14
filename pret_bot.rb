@@ -76,32 +76,47 @@ def notifica(mesaj, titlu = "Pret schimbat", link = nil)
   Net::HTTP.post(URI("https://ntfy.sh/#{NTFY_TOPIC}"), mesaj, antete)
 end
 
+# "https://www.ritmo.ro/cafe-cult/..." -> "ritmo.ro"
+def site(url)
+  URI(url).host.sub(/^www\./, "")
+end
+
+# { nume => text } -> rânduri grupate pe site, ex. "ritmo.ro:\n  Cafea ...: 62.0 lei"
+def grupat_pe_site(randuri, site_de)
+  randuri.group_by { |nume, _| site_de[nume] }.map do |s, lista|
+    "#{s}:\n" + lista.map { |nume, text| "  #{nume}: #{text}" }.join("\n")
+  end.join("\n\n")
+end
+
 # ===== PROGRAMUL PRINCIPAL =====
 produse = JSON.parse(File.read(FISIER_PRODUSE))
 preturi     = citeste_preturi_vechi
 preturi_azi = {}   # doar produsele citite cu succes la rularea asta
+site_de     = {}   # nume produs -> site, ex. "Tricou Lakers" -> "sportvision.ro"
 
 produse.each do |produs|
   nume = produs["nume"]
   url  = produs["url"]
+  site_de[nume] = site(url)
+  eticheta = "#{nume} (#{site_de[nume]})"   # ce apare în notificări
 
   begin
     pret_nou = extrage_pret(descarca_pagina(url), produs["selector"] || SELECTOR)
     raise "Prețul citit nu e valid (#{pret_nou})" if pret_nou <= 0
   rescue => e
-    notifica("#{nume}: bot-ul nu a găsit prețul. Eroare: #{e.message}", "Bot-ul are o problema", url)
+    notifica("#{eticheta}: bot-ul nu a găsit prețul. Eroare: #{e.message}", "Bot-ul are o problema", url)
     next   # trecem la următorul produs, prețul vechi rămâne salvat
   end
 
   pret_vechi = preturi[nume]
-  puts "#{nume} | Preț vechi: #{pret_vechi.inspect} | Preț nou: #{pret_nou}"
+  puts "#{eticheta} | Preț vechi: #{pret_vechi.inspect} | Preț nou: #{pret_nou}"
 
   if pret_vechi.nil?
-    notifica("#{nume}: am început să urmăresc produsul. Preț actual: #{pret_nou} lei", "Produs nou", url)
+    notifica("#{eticheta}: am început să urmăresc produsul. Preț actual: #{pret_nou} lei", "Produs nou", url)
   elsif pret_nou != pret_vechi
     diferenta = (pret_nou - pret_vechi).round(2)
     semn = diferenta > 0 ? "+" : ""
-    notifica("#{nume}: #{pret_vechi} -> #{pret_nou} lei (#{semn}#{diferenta} lei)", "Pret schimbat", url)
+    notifica("#{eticheta}: #{pret_vechi} -> #{pret_nou} lei (#{semn}#{diferenta} lei)", "Pret schimbat", url)
   else
     puts "Prețul nu s-a schimbat."
   end
@@ -122,15 +137,15 @@ if Time.now.hour == 12 && preturi_azi.any?
   salveaza_istoric(istoric)
 
   if Time.now.sunday?
-    linii = preturi_azi.keys.map do |nume|
+    randuri = preturi_azi.keys.to_h do |nume|
       ultimele7 = istoric[nume].last(7).map { |x| x["pret"] }
       medie = (ultimele7.sum / ultimele7.size).round(2)
-      "#{nume}: min #{ultimele7.min}, max #{ultimele7.max}, medie #{medie} lei"
+      [nume, "min #{ultimele7.min}, max #{ultimele7.max}, medie #{medie} lei"]
     end
-    notifica("Săptămâna asta:\n#{linii.join("\n")}", "Rezumat saptamanal")
+    notifica("Săptămâna asta:\n\n#{grupat_pe_site(randuri, site_de)}", "Rezumat saptamanal")
   else
-    linii = preturi_azi.map { |nume, pret| "#{nume}: #{pret} lei" }
-    notifica("Prețurile de azi:\n#{linii.join("\n")}", "Raport zilnic")
+    randuri = preturi_azi.to_h { |nume, pret| [nume, "#{pret} lei"] }
+    notifica("Prețurile de azi:\n\n#{grupat_pe_site(randuri, site_de)}", "Raport zilnic")
   end
 end
 
