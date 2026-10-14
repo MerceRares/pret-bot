@@ -213,6 +213,8 @@ The first run succeeded but showed a warning: `actions/checkout@v4` runs on Node
   9. Error alert when the price can't be read
   10. Daily report moved to 12:17 (cron-job.org runs at minute 17 of every hour)
   11. Track several products from `produse.json`
+  12. Per-product CSS selector (other shops: Intersport, Ritmo)
+  13. Price history in `istoric.json` + weekly summary every Sunday at 12:17
   - plus automatic "Update price" commits from the bot itself
 
 **Watch out:** the bot pushes to GitHub every hour, so your local copy is often behind. Always run `git pull` before you start working, or your `git push` will be rejected.
@@ -226,6 +228,7 @@ The first run succeeded but showed a warning: `actions/checkout@v4` runs on Node
 | `pret_bot.rb` | The bot itself |
 | `produse.json` | The list of products to track (name + link) |
 | `pret.json` | The last known price of each product (the bot's "memory") |
+| `istoric.json` | One price per day for each product (used for the Sunday weekly summary) |
 | `.github/workflows/pret.yml` | Runs the bot on GitHub (started every hour by cron-job.org) |
 | `Gemfile` / `Gemfile.lock` | Ruby gems used (`httparty`, `nokogiri`) |
 | `test_selector.rb` | Helper script used to find the right CSS selector for the price |

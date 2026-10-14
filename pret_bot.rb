@@ -7,6 +7,7 @@ require "net/http"
 FISIER_PRODUSE = "produse.json"                          # lista de produse urmărite
 SELECTOR       = ".current-price .product-price-value"   # selectorul implicit (sportvision.ro); alt site → "selector" în produse.json
 FISIER_PRET    = "pret.json"
+FISIER_ISTORIC = "istoric.json"                          # un preț pe zi pentru fiecare produs
 NTFY_TOPIC     = ENV.fetch("NTFY_TOPIC", "rares-preturi")
 
 # ===== 1. Descarcă pagina =====
@@ -58,6 +59,16 @@ def salveaza_preturi(preturi)
   File.write(FISIER_PRET, JSON.pretty_generate(date))
 end
 
+# istoric.json: { "Tricou Lakers": [ { "data": "2026-10-14", "pret": 179.99 }, ... ], ... }
+def citeste_istoric
+  return {} unless File.exist?(FISIER_ISTORIC)
+  JSON.parse(File.read(FISIER_ISTORIC))
+end
+
+def salveaza_istoric(istoric)
+  File.write(FISIER_ISTORIC, JSON.pretty_generate(istoric))
+end
+
 # ===== 4. Notificare pe telefon =====
 def notifica(mesaj, titlu = "Pret schimbat", link = nil)
   antete = { "Title" => titlu, "Tags" => "moneybag" }
@@ -67,8 +78,8 @@ end
 
 # ===== PROGRAMUL PRINCIPAL =====
 produse = JSON.parse(File.read(FISIER_PRODUSE))
-preturi = citeste_preturi_vechi
-raport  = []
+preturi     = citeste_preturi_vechi
+preturi_azi = {}   # doar produsele citite cu succes la rularea asta
 
 produse.each do |produs|
   nume = produs["nume"]
@@ -96,12 +107,31 @@ produse.each do |produs|
   end
 
   preturi[nume] = pret_nou
-  raport << "#{nume}: #{pret_nou} lei"
+  preturi_azi[nume] = pret_nou
 end
 
-# Raport zilnic la 12:17 (cron-job.org pornește bot-ul la minutul 17 al fiecărei ore)
-if Time.now.hour == 12 && raport.any?
-  notifica("Prețurile de azi:\n#{raport.join("\n")}", "Raport zilnic")
+# La 12:17 (cron-job.org pornește bot-ul la minutul 17 al fiecărei ore):
+# salvăm prețul zilei în istoric, apoi trimitem raportul zilnic (duminica: rezumatul săptămânal)
+if Time.now.hour == 12 && preturi_azi.any?
+  istoric = citeste_istoric
+  azi = Time.now.strftime("%Y-%m-%d")
+  preturi_azi.each do |nume, pret|
+    istoric[nume] ||= []
+    istoric[nume] << { "data" => azi, "pret" => pret } unless istoric[nume].last&.dig("data") == azi
+  end
+  salveaza_istoric(istoric)
+
+  if Time.now.sunday?
+    linii = preturi_azi.keys.map do |nume|
+      ultimele7 = istoric[nume].last(7).map { |x| x["pret"] }
+      medie = (ultimele7.sum / ultimele7.size).round(2)
+      "#{nume}: min #{ultimele7.min}, max #{ultimele7.max}, medie #{medie} lei"
+    end
+    notifica("Săptămâna asta:\n#{linii.join("\n")}", "Rezumat saptamanal")
+  else
+    linii = preturi_azi.map { |nume, pret| "#{nume}: #{pret} lei" }
+    notifica("Prețurile de azi:\n#{linii.join("\n")}", "Raport zilnic")
+  end
 end
 
 salveaza_preturi(preturi)

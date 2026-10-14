@@ -26,7 +26,7 @@ jobs:
         run: |
           git config user.name "pret-bot"
           git config user.email "pret-bot@users.noreply.github.com"
-          git add pret.json
+          git add pret.json istoric.json
           git commit -m "Update price" || echo "No change"
           git pull --rebase   # in case something was pushed while the bot was running
           git push
