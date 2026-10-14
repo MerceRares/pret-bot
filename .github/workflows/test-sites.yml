@@ -1,0 +1,51 @@
+# TEMPORARY: checks which price-comparison sites let GitHub's servers in. Delete after the test.
+name: test-sites
+
+on:
+  push:
+    paths:
+      - .github/workflows/test-sites.yml
+
+permissions:
+  contents: write
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Test comparison sites
+        run: |
+          UA="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+          {
+            echo "Test run on GitHub server: $(date -u '+%Y-%m-%d %H:%M UTC')"
+            for url in \
+              "https://www.price.ro/" \
+              "https://www.price.ro/index.php?action=q&text=manchester+united" \
+              "https://www.shopmania.ro/" \
+              "https://www.shopmania.ro/search?q=manchester+united" \
+              "https://www.listapreturi.ro/" \
+              "https://www.pricesdb.ro/" \
+              "https://www.compari.ro/" \
+              "https://www.pricy.ro/"
+            do
+              cod=$(curl -s -L -m 25 --compressed -o p.html -w "%{http_code}" "$url" \
+                -H "User-Agent: $UA" \
+                -H "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8" \
+                -H "Accept-Language: ro-RO,ro;q=0.9,en;q=0.8" -H "Sec-Fetch-Mode: navigate" \
+                -H "Sec-Fetch-Dest: document" -H "Sec-Fetch-Site: none" -H "Upgrade-Insecure-Requests: 1")
+              titlu=$(grep -oiE '<title[^>]*>[^<]*' p.html | head -1 | sed 's/<title[^>]*>//' | cut -c1-60)
+              dec=$(grep -oi 'decathlon' p.html | wc -l)
+              echo "HTTP $cod | $(wc -c < p.html) bytes | decathlon x$dec | $titlu | $url"
+            done
+          } | tee test-sites-result.txt
+
+      - name: Save result
+        run: |
+          git config user.name "pret-bot"
+          git config user.email "pret-bot@users.noreply.github.com"
+          git add test-sites-result.txt
+          git commit -m "Test sites result"
+          git pull --rebase
+          git push
