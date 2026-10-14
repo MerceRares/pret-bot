@@ -1,0 +1,49 @@
+# TEMPORARY: checks if pricy.ro lets GitHub's servers in. Delete after the test.
+name: test-sites
+
+on:
+  push:
+    paths:
+      - .github/workflows/test-sites.yml
+
+permissions:
+  contents: write
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Test pricy.ro
+        run: |
+          UA="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+          {
+            echo "Test run on GitHub server: $(date -u '+%Y-%m-%d %H:%M UTC')"
+            for url in \
+              "https://www.pricy.ro/ProductUrlId/tricou-de-deplasare-manchester-united-24-25--50755A4B86E23488065D33AA127D4A58" \
+              "https://www.pricy.ro/ProductUrlId/tricou-manchester-united-24-25-home--202C8DC3CA50639CAC6C9A918BCD6F5F" \
+              "https://www.pricy.ro/ProductUrlId/tricou-de-acas--manchester-united-24-25--EC80DDC53D1084E2CA7A7C02FCCD01C8" \
+              "https://www.pricy.ro/ProductUrlId/tricou-de--nc-lzire-manchester-united-26-27--53DECCC7A7339E05E64466ED9D3122B0" \
+              "https://www.pricy.ro/ProductUrlId/tricou-manchester-united-24-25-away--2AED6B589393DF27BD610CCF0B48BFE6" \
+              "https://www.pricy.ro/ProductUrlId/jachet--sportiv--adidas-manchester-united-2025-26--338EC3B46C028EB88708D3B2A539159B" \
+              "https://www.pricy.ro/ProductUrlId/bluz--de--nc-lzire-manchester-united-25-26--nainte-de-meci--43AE81D646A1C392D569DE0DD856350B"
+            do
+              cod=$(curl -s -L -m 25 --compressed -o p.html -w "%{http_code}" "$url" \
+                -H "User-Agent: $UA" \
+                -H "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8" \
+                -H "Accept-Language: ro-RO,ro;q=0.9,en;q=0.8" -H "Sec-Fetch-Mode: navigate" \
+                -H "Sec-Fetch-Dest: document" -H "Sec-Fetch-Site: none" -H "Upgrade-Insecure-Requests: 1")
+              pret=$(grep -oE 'property="product:price:amount" content="[0-9.]+"' p.html | head -1 | grep -oE '[0-9.]+"$' | tr -d '"')
+              echo "HTTP $cod | pret: $pret | $url"
+            done
+          } | tee test-sites-result.txt
+
+      - name: Save result
+        run: |
+          git config user.name "pret-bot"
+          git config user.email "pret-bot@users.noreply.github.com"
+          git add test-sites-result.txt
+          git commit -m "Test sites result"
+          git pull --rebase
+          git push
