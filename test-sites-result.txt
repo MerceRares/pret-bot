@@ -1,0 +1,8 @@
+Test run on GitHub server: 2026-10-14 08:12 UTC
+HTTP 403 | pret:  | https://www.pricy.ro/ProductUrlId/tricou-de-deplasare-manchester-united-24-25--50755A4B86E23488065D33AA127D4A58
+HTTP 403 | pret:  | https://www.pricy.ro/ProductUrlId/tricou-manchester-united-24-25-home--202C8DC3CA50639CAC6C9A918BCD6F5F
+HTTP 403 | pret:  | https://www.pricy.ro/ProductUrlId/tricou-de-acas--manchester-united-24-25--EC80DDC53D1084E2CA7A7C02FCCD01C8
+HTTP 403 | pret:  | https://www.pricy.ro/ProductUrlId/tricou-de--nc-lzire-manchester-united-26-27--53DECCC7A7339E05E64466ED9D3122B0
+HTTP 403 | pret:  | https://www.pricy.ro/ProductUrlId/tricou-manchester-united-24-25-away--2AED6B589393DF27BD610CCF0B48BFE6
+HTTP 403 | pret:  | https://www.pricy.ro/ProductUrlId/jachet--sportiv--adidas-manchester-united-2025-26--338EC3B46C028EB88708D3B2A539159B
+HTTP 403 | pret:  | https://www.pricy.ro/ProductUrlId/bluz--de--nc-lzire-manchester-united-25-26--nainte-de-meci--43AE81D646A1C392D569DE0DD856350B
