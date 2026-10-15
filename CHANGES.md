@@ -216,6 +216,7 @@ The first run succeeded but showed a warning: `actions/checkout@v4` runs on Node
   12. Per-product CSS selector (other shops: Intersport, Ritmo)
   13. Price history in `istoric.json` + weekly summary every Sunday at 12:17
   14. Show the site (e.g. `ritmo.ro`) in every notification; reports grouped by site
+  15. Error alert only once per broken product, then "Rezolvat" when it works again
   - plus automatic "Update price" commits from the bot itself
 
 **Watch out:** the bot pushes to GitHub every hour, so your local copy is often behind. Always run `git pull` before you start working, or your `git push` will be rejected.
@@ -228,7 +229,7 @@ The first run succeeded but showed a warning: `actions/checkout@v4` runs on Node
 |---|---|
 | `pret_bot.rb` | The bot itself |
 | `produse.json` | The list of products to track (name + link) |
-| `pret.json` | The last known price of each product (the bot's "memory") |
+| `pret.json` | The last known price of each product (the bot's "memory"), plus the list of products that are currently broken (`erori`) |
 | `istoric.json` | One price per day for each product (used for the Sunday weekly summary) |
 | `.github/workflows/pret.yml` | Runs the bot on GitHub (started every hour by cron-job.org) |
 | `Gemfile` / `Gemfile.lock` | Ruby gems used (`httparty`, `nokogiri`) |

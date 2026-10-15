@@ -48,14 +48,20 @@ def extrage_pret(html, selector)
 end
 
 # ===== 3. Citește / salvează prețurile =====
-# pret.json: { "preturi": { "Tricou Lakers": 179.99, ... }, "actualizat": "..." }
+# pret.json: { "preturi": { "Tricou Lakers": 179.99, ... }, "erori": ["..."], "actualizat": "..." }
 def citeste_preturi_vechi
   return {} unless File.exist?(FISIER_PRET)
   JSON.parse(File.read(FISIER_PRET))["preturi"] || {}
 end
 
-def salveaza_preturi(preturi)
-  date = { preturi: preturi, actualizat: Time.now.strftime("%Y-%m-%d %H:%M") }
+# produsele care nu au putut fi citite la ultima rulare (ca să nu trimitem aceeași eroare în fiecare oră)
+def citeste_erori
+  return [] unless File.exist?(FISIER_PRET)
+  JSON.parse(File.read(FISIER_PRET))["erori"] || []
+end
+
+def salveaza_preturi(preturi, erori)
+  date = { preturi: preturi, erori: erori, actualizat: Time.now.strftime("%Y-%m-%d %H:%M") }
   File.write(FISIER_PRET, JSON.pretty_generate(date))
 end
 
@@ -91,6 +97,7 @@ end
 # ===== PROGRAMUL PRINCIPAL =====
 produse = JSON.parse(File.read(FISIER_PRODUSE))
 preturi     = citeste_preturi_vechi
+erori       = citeste_erori   # produse stricate la rularea trecută
 preturi_azi = {}   # doar produsele citite cu succes la rularea asta
 site_de     = {}   # nume produs -> site, ex. "Tricou Lakers" -> "sportvision.ro"
 
@@ -104,12 +111,20 @@ produse.each do |produs|
     pret_nou = extrage_pret(descarca_pagina(url), produs["selector"] || SELECTOR)
     raise "Prețul citit nu e valid (#{pret_nou})" if pret_nou <= 0
   rescue => e
-    notifica("#{eticheta}: bot-ul nu a găsit prețul. Eroare: #{e.message}", "Bot-ul are o problema", url)
+    puts "#{eticheta} | EROARE: #{e.message}"
+    unless erori.include?(nume)   # anunțăm doar prima dată când se strică
+      notifica("#{eticheta}: bot-ul nu a găsit prețul. Eroare: #{e.message}", "Bot-ul are o problema", url)
+      erori << nume
+    end
     next   # trecem la următorul produs, prețul vechi rămâne salvat
   end
 
   pret_vechi = preturi[nume]
   puts "#{eticheta} | Preț vechi: #{pret_vechi.inspect} | Preț nou: #{pret_nou}"
+
+  if erori.delete(nume)   # era stricat, acum merge din nou
+    notifica("#{eticheta}: merge din nou. Preț actual: #{pret_nou} lei", "Rezolvat", url)
+  end
 
   if pret_vechi.nil?
     notifica("#{eticheta}: am început să urmăresc produsul. Preț actual: #{pret_nou} lei", "Produs nou", url)
@@ -149,4 +164,5 @@ if Time.now.hour == 12 && preturi_azi.any?
   end
 end
 
-salveaza_preturi(preturi)
+erori &= produse.map { |p| p["nume"] }   # uităm erorile produselor șterse din produse.json
+salveaza_preturi(preturi, erori)
