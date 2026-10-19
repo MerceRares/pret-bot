@@ -5,5 +5,12 @@
   { "nume": "Cafea Fistic 250g", "url": "https://www.emag.ro/cafea-boabe-aromatizata-cafe-cult-fistic-250-g-15222/pd/D649RFMBM/", "selector": ".pricing-block .product-new-price" },
   { "nume": "Cafea Turkish Delight 250g", "url": "https://www.emag.ro/cafea-boabe-aromatizata-cafe-cult-turkish-delight-250-g-12342/pd/DYJX0J3BM/", "selector": ".pricing-block .product-new-price" },
   { "nume": "Cafea Sweet Orange Vanilla 250g", "url": "https://www.emag.ro/cafea-boabe-aromatizata-cafecult-sweet-orange-vanilla-250-gr-14432/pd/DDV3K32BM/", "selector": ".pricing-block .product-new-price" },
-  { "nume": "Cafea Ciocolata-Chili 250g", "url": "https://www.emag.ro/cafea-boabe-aromatizata-cafe-cult-ciocolata-si-chili-250-g-12602/pd/D94JHGYBM/", "selector": ".pricing-block .product-new-price" }
+  { "nume": "Cafea Ciocolata-Chili 250g", "url": "https://www.emag.ro/cafea-boabe-aromatizata-cafe-cult-ciocolata-si-chili-250-g-12602/pd/D94JHGYBM/", "selector": ".pricing-block .product-new-price" },
+  { "nume": "Tricou Dinamo Joc 26/27 Rosu-Alb", "url": "https://www.emag.ro/dinamo-tricou-pentru-joc-dinamo-26-27/fd/7394343/culoare-c5401,rosu-alb-v1001058219/", "selector": ".pricing-block .product-new-price" },
+  { "nume": "Tricou Dinamo Joc 26/27 Negru-Maro", "url": "https://www.emag.ro/dinamo-tricou-de-joc-dinamo-26-27/fd/7394342/culoare-c5401,negru-maro-v1010035580/", "selector": ".pricing-block .product-new-price" },
+  { "nume": "Maiou Dinamo Antrenament 26/27", "url": "https://www.emag.ro/dinamo-maiou-pentru-antrenament-dinamo-26-27/fd/7486313/culoare-c5401,rosu-aprins-v4734593/", "selector": ".pricing-block .product-new-price" },
+  { "nume": "Bluza Dinamo Antrenament 26/27", "url": "https://www.emag.ro/dinamo-bluza-pentru-antrenament-dinamo-26-27/fd/7486311/culoare-c5401,rosu-aprins-v4734593/", "selector": ".pricing-block .product-new-price" },
+  { "nume": "Tricou Nike Baschet Logo Galben-Violet", "url": "https://www.emag.ro/nike-tricou-cu-model-logo-pentru-baschet/fd/4070873/culoare-c5401,galben-violet-v1005856089/", "selector": ".pricing-block .product-new-price" },
+  { "nume": "Saboti Crocs Celtics 46-47", "url": "https://www.emag.ro/saboti-pentru-barbati-crocs-classic-nba-boston-celtics-clog-209442-100-verde-46-47-eu-cro-209442-100-whti-m12/pd/DMNGWJYBM/", "selector": ".pricing-block .product-new-price" },
+  { "nume": "Tricou Dallas Mavericks New Era", "url": "https://www.emag.ro/new-era-tricou-dallas-mavericks-nba/fd/6755939/culoare-c5401,albastru-bleumarin-v1015830546/", "selector": ".pricing-block .product-new-price" }
 ]
