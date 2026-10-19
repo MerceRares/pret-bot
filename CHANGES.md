@@ -217,6 +217,7 @@ The first run succeeded but showed a warning: `actions/checkout@v4` runs on Node
   13. Price history in `istoric.json` + weekly summary every Sunday at 12:17
   14. Show the site (e.g. `ritmo.ro`) in every notification; reports grouped by site
   15. Error alert only once per broken product, then "Rezolvat" when it works again
+  16. Second bot on the PC for eMAG (`BOT_LOCAL=1`, `produse-local.json`, Windows Task Scheduler) – see LOCAL-EMAG.md
   - plus automatic "Update price" commits from the bot itself
 
 **Watch out:** the bot pushes to GitHub every hour, so your local copy is often behind. Always run `git pull` before you start working, or your `git push` will be rejected.
@@ -231,6 +232,8 @@ The first run succeeded but showed a warning: `actions/checkout@v4` runs on Node
 | `produse.json` | The list of products to track (name + link) |
 | `pret.json` | The last known price of each product (the bot's "memory"), plus the list of products that are currently broken (`erori`) |
 | `istoric.json` | One price per day for each product (used for the Sunday weekly summary) |
+| `produse-local.json` | eMAG products, checked by the bot on the PC (`BOT_LOCAL=1`) |
+| `.gitignore` | keeps the PC bot's memory, log and start script out of git |
 | `.github/workflows/pret.yml` | Runs the bot on GitHub (started every hour by cron-job.org) |
 | `Gemfile` / `Gemfile.lock` | Ruby gems used (`httparty`, `nokogiri`) |
 | `test_selector.rb` | Helper script used to find the right CSS selector for the price |

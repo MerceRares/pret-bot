@@ -4,10 +4,13 @@ require "json"
 require "net/http"
 
 # ===== CONFIGURARE =====
-FISIER_PRODUSE = "produse.json"                          # lista de produse urmărite
+# Pe PC (BOT_LOCAL=1) bot-ul folosește fișierele "-local" (produse eMAG), pe GitHub pe cele normale
+SUFIX          = ENV["BOT_LOCAL"] ? "-local" : ""
+TITLU_EXTRA    = ENV["BOT_LOCAL"] ? " (PC)" : ""        # ca să deosebești rapoartele pe telefon
+FISIER_PRODUSE = "produse#{SUFIX}.json"                  # lista de produse urmărite
 SELECTOR       = ".current-price .product-price-value"   # selectorul implicit (sportvision.ro); alt site → "selector" în produse.json
-FISIER_PRET    = "pret.json"
-FISIER_ISTORIC = "istoric.json"                          # un preț pe zi pentru fiecare produs
+FISIER_PRET    = "pret#{SUFIX}.json"
+FISIER_ISTORIC = "istoric#{SUFIX}.json"                  # un preț pe zi pentru fiecare produs
 NTFY_TOPIC     = ENV.fetch("NTFY_TOPIC")                 # secret pe GitHub; local: $env:NTFY_TOPIC = "..."
 
 # ===== 1. Descarcă pagina =====
@@ -157,10 +160,10 @@ if Time.now.hour == 12 && preturi_azi.any?
       medie = (ultimele7.sum / ultimele7.size).round(2)
       [nume, "min #{ultimele7.min}, max #{ultimele7.max}, medie #{medie} lei"]
     end
-    notifica("Săptămâna asta:\n\n#{grupat_pe_site(randuri, site_de)}", "Rezumat saptamanal")
+    notifica("Săptămâna asta:\n\n#{grupat_pe_site(randuri, site_de)}", "Rezumat saptamanal#{TITLU_EXTRA}")
   else
     randuri = preturi_azi.to_h { |nume, pret| [nume, "#{pret} lei"] }
-    notifica("Prețurile de azi:\n\n#{grupat_pe_site(randuri, site_de)}", "Raport zilnic")
+    notifica("Prețurile de azi:\n\n#{grupat_pe_site(randuri, site_de)}", "Raport zilnic#{TITLU_EXTRA}")
   end
 end
 
