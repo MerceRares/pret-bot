@@ -155,12 +155,17 @@ if Time.now.hour == 12 && preturi_azi.any?
   salveaza_istoric(istoric)
 
   if Time.now.sunday?
-    randuri = preturi_azi.keys.to_h do |nume|
+    # doar produsele al căror preț s-a schimbat în ultimele 7 zile, ca mesajul să încapă pe telefon
+    randuri = {}
+    preturi_azi.each do |nume, pret|
       ultimele7 = istoric[nume].last(7).map { |x| x["pret"] }
-      medie = (ultimele7.sum / ultimele7.size).round(2)
-      [nume, "min #{ultimele7.min}, max #{ultimele7.max}, medie #{medie} lei"]
+      next if ultimele7.min == ultimele7.max   # același preț toată săptămâna
+      randuri[nume] = "min #{ultimele7.min}, max #{ultimele7.max}, acum #{pret} lei"
     end
-    notifica("Săptămâna asta:\n\n#{grupat_pe_site(randuri, site_de)}", "Rezumat saptamanal#{TITLU_EXTRA}")
+    neschimbate = preturi_azi.size - randuri.size
+    text = randuri.any? ? "Prețuri schimbate săptămâna asta:\n\n#{grupat_pe_site(randuri, site_de)}\n\n" : ""
+    text += "Produse fără nicio schimbare de preț: #{neschimbate}"
+    notifica(text, "Rezumat saptamanal#{TITLU_EXTRA}")
   else
     randuri = preturi_azi.to_h { |nume, pret| [nume, "#{pret} lei"] }
     notifica("Prețurile de azi:\n\n#{grupat_pe_site(randuri, site_de)}", "Raport zilnic#{TITLU_EXTRA}")

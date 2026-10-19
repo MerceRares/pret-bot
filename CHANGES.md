@@ -218,6 +218,7 @@ The first run succeeded but showed a warning: `actions/checkout@v4` runs on Node
   14. Show the site (e.g. `ritmo.ro`) in every notification; reports grouped by site
   15. Error alert only once per broken product, then "Rezolvat" when it works again
   16. Second bot on the PC for eMAG (`BOT_LOCAL=1`, `produse-local.json`, Windows Task Scheduler) – see LOCAL-EMAG.md
+  17. Weekly summary lists only products whose price changed that week (it was too long for the phone)
   - plus automatic "Update price" commits from the bot itself
 
 **Watch out:** the bot pushes to GitHub every hour, so your local copy is often behind. Always run `git pull` before you start working, or your `git push` will be rejected.
