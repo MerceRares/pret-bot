@@ -30,6 +30,14 @@ def descarca_pagina(url)
     timeout: 20
   )
   raise "Eroare HTTP #{raspuns.code}" unless raspuns.code == 200
+
+  # Dacă magazinul a șters produsul, unele site-uri (ex. intersport.ro) redirecționează la pagina
+  # categoriei. Acolo selectorul ar citi prețul ALTUI produs, așa că tratăm redirecționarea ca eroare.
+  pagina_finala = raspuns.request.last_uri
+  if pagina_finala.path.chomp("/") != URI(url).path.chomp("/")
+    raise "Produsul nu mai există pe site (link-ul duce la #{pagina_finala})"
+  end
+
   raspuns.body
 end
 
