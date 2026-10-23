@@ -21,10 +21,8 @@
     "Cafea Turkish Honey 250g": 62.0,
     "Cafea Pistachio Dubai 250g": 63.0,
     "Tricou Manchester United Home": 519.99,
-    "Tricou Manchester United Away": 519.99,
     "Tricou Manchester United 25/26 Home": 349.99,
     "Tricou Manchester United IY7806": 299.99,
-    "Tricou Manchester United IU1397": 349.99,
     "Tricou Manchester United KD4225": 349.99,
     "Tricou Chicago Bulls Logo": 179.99,
     "Tricou Celtics Essentials": 118.99,
@@ -38,8 +36,6 @@
     "Tricou Lakers Essentials Logo": 179.99,
     "Tricou Celtics Statement 1056916": 189.99
   },
-  "erori": [
-    "Tricou Manchester United IU1397"
-  ],
+  "erori": [],
   "actualizat": "2026-10-23 12:17"
 }

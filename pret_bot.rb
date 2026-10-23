@@ -13,6 +13,11 @@ FISIER_PRET    = "pret#{SUFIX}.json"
 FISIER_ISTORIC = "istoric#{SUFIX}.json"                  # un preț pe zi pentru fiecare produs
 NTFY_TOPIC     = ENV.fetch("NTFY_TOPIC")                 # secret pe GitHub; local: $env:NTFY_TOPIC = "..."
 
+# Eroare separată pentru "produsul a fost scos de pe site / nu mai e în stoc",
+# ca să primești "Produs indisponibil" în loc de "Bot-ul are o problema"
+class Indisponibil < StandardError; end
+TEXTE_STOC_EPUIZAT = /nu mai este disponibil|stoc epuizat|produs indisponibil|momentan indisponibil|nu mai este [iî]n stoc|out of stock/i
+
 # ===== 1. Descarcă pagina =====
 def descarca_pagina(url)
   raspuns = HTTParty.get(
@@ -29,13 +34,14 @@ def descarca_pagina(url)
     },
     timeout: 20
   )
+  raise Indisponibil, "pagina produsului nu mai există (HTTP 404)" if raspuns.code == 404
   raise "Eroare HTTP #{raspuns.code}" unless raspuns.code == 200
 
   # Dacă magazinul a șters produsul, unele site-uri (ex. intersport.ro) redirecționează la pagina
   # categoriei. Acolo selectorul ar citi prețul ALTUI produs, așa că tratăm redirecționarea ca eroare.
   pagina_finala = raspuns.request.last_uri
   if pagina_finala.path.chomp("/") != URI(url).path.chomp("/")
-    raise "Produsul nu mai există pe site (link-ul duce la #{pagina_finala})"
+    raise Indisponibil, "a fost scos de pe site (link-ul duce acum la #{pagina_finala})"
   end
 
   raspuns.body
@@ -51,7 +57,11 @@ def extrage_pret(html, selector)
 
   # Varianta 2: elementul vizibil, ex. "1.299,99 Lei"
   element = doc.at_css(selector)
-  raise "Nu am găsit prețul. Verifică selectorul!" if element.nil?
+  if element.nil?
+    # pagina există, dar fără preț: fie e epuizat (scrie pe pagină), fie s-a schimbat site-ul
+    raise Indisponibil, "nu mai este în stoc" if html.match?(TEXTE_STOC_EPUIZAT)
+    raise "Nu am găsit prețul. Verifică selectorul!"
+  end
 
   text = element.text.strip
   puts "Text găsit pe pagină: #{text.inspect}"
@@ -124,7 +134,11 @@ produse.each do |produs|
   rescue => e
     puts "#{eticheta} | EROARE: #{e.message}"
     unless erori.include?(nume)   # anunțăm doar prima dată când se strică
-      notifica("#{eticheta}: bot-ul nu a găsit prețul. Eroare: #{e.message}", "Bot-ul are o problema", url)
+      if e.is_a?(Indisponibil)
+        notifica("#{eticheta}: #{e.message}. Ultimul preț: #{preturi[nume]} lei", "Produs indisponibil", url)
+      else
+        notifica("#{eticheta}: bot-ul nu a găsit prețul. Eroare: #{e.message}", "Bot-ul are o problema", url)
+      end
       erori << nume
     end
     next   # trecem la următorul produs, prețul vechi rămâne salvat
