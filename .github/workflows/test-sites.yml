@@ -1,0 +1,25 @@
+# TEMPORARY: runs the real bot on GitHub's servers with only the officeshoes.ro product. Delete after the test.
+name: test-sites
+
+on:
+  push:
+    paths:
+      - .github/workflows/test-sites.yml
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      TZ: Europe/Bucharest
+      BOT_LOCAL: "1"                              # read produse-local.json, which we overwrite below
+      NTFY_TOPIC: rares-preturi-officeshoes-t6h3  # test topic, not the real one
+    steps:
+      - uses: actions/checkout@v5
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+      - name: Run the bot with only the new product
+        run: |
+          echo '[{"nume":"Test Office Shoes","url":"https://www.officeshoes.ro/incaltaminte-karl-lagerfeld-pantofi-sport-kapri-konstellation/96548","selector":".product-price span[property=price]"}]' > produse-local.json
+          bundle exec ruby pret_bot.rb
