@@ -33,5 +33,6 @@
   { "nume": "Cafea Pistachio Cream 250g", "url": "https://www.ritmo.ro/cafe-cult/cafea-boabe-pistachio-cream-250-gr.html", "selector": ".detail-price .fPrice" },
   { "nume": "Cafea Strawberry Cheesecake 250g", "url": "https://www.ritmo.ro/cafe-cult/cafea-boabe-strawberry-cheesecake-100-arabica-250g-cafe-cult.html", "selector": ".detail-price .fPrice" },
   { "nume": "Cafea Turkish Honey 250g", "url": "https://www.ritmo.ro/cafe-cult/cafea-boabe-turkish-honey-100-arabica-250g-cafe-cult.html", "selector": ".detail-price .fPrice" },
-  { "nume": "Cafea Pistachio Dubai 250g", "url": "https://www.ritmo.ro/cafe-cult/cafea-fistic-ciocolata-stil-dubai-250g.html", "selector": ".detail-price .fPrice" }
+  { "nume": "Cafea Pistachio Dubai 250g", "url": "https://www.ritmo.ro/cafe-cult/cafea-fistic-ciocolata-stil-dubai-250g.html", "selector": ".detail-price .fPrice" },
+  { "nume": "Pantofi Karl Lagerfeld Kapri Konstellation", "url": "https://www.officeshoes.ro/incaltaminte-karl-lagerfeld-pantofi-sport-kapri-konstellation/96548", "selector": ".product-price span[property=price]" }
 ]
