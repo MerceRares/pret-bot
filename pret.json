@@ -1,7 +1,7 @@
 {
   "preturi": {
-    "Tricou Lakers": 179.99,
-    "Tricou Celtics": 179.99,
+    "Tricou Lakers": 125.99,
+    "Tricou Celtics": 125.99,
     "Tricou Romania Joma": 199.99,
     "Cafea Caramel Choco 250g": 50.0,
     "Cafea Gingerbread": 63.0,
@@ -25,10 +25,10 @@
     "Tricou Manchester United IY7806": 299.99,
     "Tricou Manchester United KD4225": 349.99,
     "Tricou Chicago Bulls Logo": 179.99,
-    "Tricou Celtics Essentials": 118.99,
+    "Tricou Celtics Essentials": 84.99,
     "Tricou Lakers Essentials Statement": 118.99,
-    "Tricou Lakers 537901": 179.99,
-    "Tricou Milwaukee Bucks": 179.99,
+    "Tricou Lakers 537901": 125.99,
+    "Tricou Milwaukee Bucks": 125.99,
     "Tricou Chicago Bulls Essentials Logo": 174.99,
     "Tricou Celtics Essentials Logo": 174.99,
     "Tricou Baschet Nike 864902": 174.99,
@@ -38,7 +38,7 @@
     "Pantofi Karl Lagerfeld Kapri Konstellation": 790.0
   },
   "erori": [
-
+    "Pantofi Karl Lagerfeld Kapri Konstellation"
   ],
-  "actualizat": "2026-11-05 06:18"
+  "actualizat": "2026-11-05 07:17"
 }
