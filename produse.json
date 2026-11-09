@@ -34,5 +34,16 @@
   { "nume": "Cafea Strawberry Cheesecake 250g", "url": "https://www.ritmo.ro/cafe-cult/cafea-boabe-strawberry-cheesecake-100-arabica-250g-cafe-cult.html", "selector": ".detail-price .fPrice" },
   { "nume": "Cafea Turkish Honey 250g", "url": "https://www.ritmo.ro/cafe-cult/cafea-boabe-turkish-honey-100-arabica-250g-cafe-cult.html", "selector": ".detail-price .fPrice" },
   { "nume": "Cafea Pistachio Dubai 250g", "url": "https://www.ritmo.ro/cafe-cult/cafea-fistic-ciocolata-stil-dubai-250g.html", "selector": ".detail-price .fPrice" },
-  { "nume": "Pantofi Karl Lagerfeld Kapri Konstellation", "url": "https://www.officeshoes.ro/incaltaminte-karl-lagerfeld-pantofi-sport-kapri-konstellation/96548", "selector": ".product-price span[property=price]" }
+  { "nume": "Pantofi Karl Lagerfeld Kapri Konstellation", "url": "https://www.officeshoes.ro/incaltaminte-karl-lagerfeld-pantofi-sport-kapri-konstellation/96548", "selector": ".product-price span[property=price]" },
+  { "nume": "Bluza Jordan Jumpman Crew", "url": "https://www.zalando.ro/jordan-jumpman-crew-bluza-sport-blackwhite-joc42d09j-q11.html", "selector": "json-ld" },
+  { "nume": "Rucsac Lakers NBA", "url": "https://www.zalando.ro/nba-nba-los-angeles-lakers-backpack-unisex-rucsac-black-nb342l00i-q11.html", "selector": "json-ld" },
+  { "nume": "Rucsac Stephen Curry NBA", "url": "https://www.zalando.ro/nba-curry-unisex-rucsac-black-nb344e002-q11.html", "selector": "json-ld" },
+  { "nume": "Rucsac Anthony Edwards NBA", "url": "https://www.zalando.ro/nba-edwards-unisex-rucsac-black-nb344e004-q11.html", "selector": "json-ld" },
+  { "nume": "Rucsac Cooper Flagg NBA", "url": "https://www.zalando.ro/nba-flagg-unisex-rucsac-black-nb344e003-q11.html", "selector": "json-ld" },
+  { "nume": "Rucsac Luka Doncic NBA", "url": "https://www.zalando.ro/nba-doncic-unisex-rucsac-black-nb344e001-q11.html", "selector": "json-ld" },
+  { "nume": "Tricou Lakers Luka Doncic Alb", "url": "https://www.zalando.ro/nike-performance-los-angeles-lakers-tricou-cu-imprimeu-white-n1242d80o-a11.html", "selector": "json-ld" },
+  { "nume": "Tricou Jayson Tatum Celtics Alb", "url": "https://www.zalando.ro/nike-performance-nba-jayson-tatum-boston-celtics-tee-bluza-nba-whitetatum-jayson-n1242d4xq-a11.html", "selector": "json-ld" },
+  { "nume": "Tricou Giannis Antetokounmpo Bucks", "url": "https://www.zalando.ro/nike-performance-nba-milwaukee-bucks-tee-tricou-cu-imprimeu-firantetokounmpo-n1242d4yi-m11.html", "selector": "json-ld" },
+  { "nume": "Tricou Nikola Jokic Nuggets", "url": "https://www.zalando.ro/nike-performance-nba-denver-nuggets-nikola-jokic-name-and-number-tee-bluza-nba-college-navyjokic-nikola-n1242d4yr-k11.html", "selector": "json-ld" },
+  { "nume": "Hanorac Golden State Warriors", "url": "https://www.zalando.ro/nike-performance-golden-state-warriors-gsw-club-logo-hanorac-rush-blue-n1242g1ls-k11.html", "selector": "json-ld" }
 ]
