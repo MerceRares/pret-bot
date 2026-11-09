@@ -12,5 +12,8 @@
   { "nume": "Bluza Dinamo Antrenament 26/27", "url": "https://www.emag.ro/dinamo-bluza-pentru-antrenament-dinamo-26-27/fd/7486311/culoare-c5401,rosu-aprins-v4734593/", "selector": ".pricing-block .product-new-price" },
   { "nume": "Tricou Nike Baschet Logo Galben-Violet", "url": "https://www.emag.ro/nike-tricou-cu-model-logo-pentru-baschet/fd/4070873/culoare-c5401,galben-violet-v1005856089/", "selector": ".pricing-block .product-new-price" },
   { "nume": "Saboti Crocs Celtics 46-47", "url": "https://www.emag.ro/saboti-pentru-barbati-crocs-classic-nba-boston-celtics-clog-209442-100-verde-46-47-eu-cro-209442-100-whti-m12/pd/DMNGWJYBM/", "selector": ".pricing-block .product-new-price" },
-  { "nume": "Tricou Dallas Mavericks New Era", "url": "https://www.emag.ro/new-era-tricou-dallas-mavericks-nba/fd/6755939/culoare-c5401,albastru-bleumarin-v1015830546/", "selector": ".pricing-block .product-new-price" }
+  { "nume": "Tricou Dallas Mavericks New Era", "url": "https://www.emag.ro/new-era-tricou-dallas-mavericks-nba/fd/6755939/culoare-c5401,albastru-bleumarin-v1015830546/", "selector": ".pricing-block .product-new-price" },
+  { "nume": "Tricou Houston Rockets New Era", "url": "https://www.emag.ro/new-era-tricou-houston-rockets-nba/fd/6755957/culoare-c5401,negru-rosu-capsuna-v1023214955/", "selector": ".pricing-block .product-new-price" },
+  { "nume": "Tricou Magic Johnson Mitchell & Ness", "url": "https://www.emag.ro/tricou-sport-barbati-mitchell-ness-magic-johnson-galben-bumbac-100/fd/7138698/", "selector": ".pricing-block .product-new-price" },
+  { "nume": "Tricou Celtics New Era Negru", "url": "https://www.emag.ro/tricou-barbati-new-era-celtics-bumbac-si-poliester-negru-cu-logo-echipei-boston-celtics/fd/7163714/", "selector": ".pricing-block .product-new-price" }
 ]
