@@ -221,6 +221,7 @@ The first run succeeded but showed a warning: `actions/checkout@v4` runs on Node
   17. Weekly summary lists only products whose price changed that week (it was too long for the phone)
   18. A redirect to another page (e.g. a removed product sent to its category) is now an error, not a price
   19. "Produs indisponibil" notification (removed from site, sold out or HTTP 404), separate from "Bot-ul are o problema"; removed 2 Manchester United shirts that are gone
+  20. `"selector": "json-ld"`: read price and stock from the page's product data (Zalando); 8 s pause between Zalando pages
   - plus automatic "Update price" commits from the bot itself
 
 **Watch out:** the bot pushes to GitHub every hour, so your local copy is often behind. Always run `git pull` before you start working, or your `git push` will be rejected.
