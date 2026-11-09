@@ -121,6 +121,14 @@ def site(url)
   URI(url).host.sub(/^www\./, "")
 end
 
+# Trimite raportul în mai multe mesaje (pe site, maxim 10 produse), ca să încapă pe telefon
+def trimite_pe_bucati(randuri, site_de, titlu)
+  mesaje = randuri.group_by { |nume, _| site_de[nume] }.flat_map do |s, lista|
+    lista.each_slice(10).map { |bucata| "#{s}:\n" + bucata.map { |nume, text| "#{nume}: #{text}" }.join("\n") }
+  end
+  mesaje.each_with_index { |mesaj, i| notifica(mesaj, "#{titlu} (#{i + 1}/#{mesaje.size})") }
+end
+
 # { nume => text } -> rânduri grupate pe site, ex. "ritmo.ro:\n  Cafea ...: 62.0 lei"
 def grupat_pe_site(randuri, site_de)
   randuri.group_by { |nume, _| site_de[nume] }.map do |s, lista|
@@ -204,7 +212,7 @@ if Time.now.hour == 12 && preturi_azi.any?
     notifica(text, "Rezumat saptamanal#{TITLU_EXTRA}")
   else
     randuri = preturi_azi.to_h { |nume, pret| [nume, "#{pret} lei"] }
-    notifica("Prețurile de azi:\n\n#{grupat_pe_site(randuri, site_de)}", "Raport zilnic#{TITLU_EXTRA}")
+    trimite_pe_bucati(randuri, site_de, "Raport zilnic#{TITLU_EXTRA}")
   end
 end
 
