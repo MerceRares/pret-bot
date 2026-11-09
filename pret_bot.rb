@@ -48,8 +48,21 @@ def descarca_pagina(url)
 end
 
 # ===== 2. Extrage prețul =====
+# "selector": "json-ld" -> prețul din datele pentru motoarele de căutare (ex. zalando.ro), pe mărimi
+def pret_din_json_ld(doc)
+  blocuri = doc.css('script[type="application/ld+json"]').flat_map { |s| [JSON.parse(s.text)].flatten }
+  produs = blocuri.find { |b| b["hasVariant"] }
+  raise "Nu am găsit datele produsului (JSON-LD)" if produs.nil?
+
+  in_stoc = produs["hasVariant"].select { |v| v.dig("offers", "availability").to_s.include?("InStock") }
+  raise Indisponibil, "nu mai este în stoc" if in_stoc.empty?
+
+  in_stoc.map { |v| v.dig("offers", "price").to_f }.min   # cel mai mic preț dintre mărimile disponibile
+end
+
 def extrage_pret(html, selector)
   doc = Nokogiri::HTML(html)
+  return pret_din_json_ld(doc) if selector == "json-ld"
 
   # Varianta 1: tag-ul ascuns cu prețul curat
   meta = doc.at_css('meta[itemprop="price"]')
@@ -126,6 +139,7 @@ produse.each do |produs|
   nume = produs["nume"]
   url  = produs["url"]
   site_de[nume] = site(url)
+  sleep 8 if site_de[nume] == "zalando.ro"   # zalando răspunde cu 429 dacă primește prea multe cereri la rând
   eticheta = "#{nume} (#{site_de[nume]})"   # ce apare în notificări
 
   begin
