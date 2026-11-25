@@ -4,22 +4,22 @@
     "Tricou Celtics": 179.99,
     "Tricou Romania Joma": 199.99,
     "Cafea Caramel Choco 250g": 50.0,
-    "Cafea Gingerbread": 63.0,
-    "Cafea Sweet Orange Vanilla 250g": 50.0,
+    "Cafea Gingerbread": 65.0,
+    "Cafea Sweet Orange Vanilla 250g": 65.0,
     "Cafea Chili Chocolate 250g": 57.0,
     "Cafea Chocolate Orange 1kg": 218.0,
-    "Cafea Chocolate Orange 250g": 62.0,
-    "Cafea Chocolate Rum 250g": 62.0,
-    "Cafea English Caramel 250g": 62.0,
+    "Cafea Chocolate Orange 250g": 65.0,
+    "Cafea Chocolate Rum 250g": 65.0,
+    "Cafea English Caramel 250g": 65.0,
     "Cafea Happy Hazelnut 1kg": 218.0,
     "Cafea Happy Hazelnut 250g": 62.0,
     "Cafea Irish Cream 1kg": 218.0,
     "Cafea Irish Cream 250g": 62.0,
     "Cafea Hazelnut Cinnamon 250g": 65.0,
     "Cafea Pistachio Cream 250g": 62.0,
-    "Cafea Strawberry Cheesecake 250g": 52.0,
+    "Cafea Strawberry Cheesecake 250g": 65.0,
     "Cafea Turkish Honey 250g": 62.0,
-    "Cafea Pistachio Dubai 250g": 63.0,
+    "Cafea Pistachio Dubai 250g": 65.0,
     "Tricou Manchester United Home": 519.99,
     "Tricou Manchester United 25/26 Home": 349.99,
     "Tricou Manchester United IY7806": 299.99,
@@ -49,10 +49,11 @@
     "Hanorac Golden State Warriors": 379.0
   },
   "erori": [
-    "Cafea Caramel Choco 250g",
-    "Cafea Irish Cream 1kg",
     "Cafea Irish Cream 250g",
-    "Cafea Hazelnut Cinnamon 250g"
+    "Cafea Hazelnut Cinnamon 250g",
+    "Tricou Baschet Nike 864902",
+    "Cafea Chocolate Orange 1kg",
+    "Cafea Pistachio Cream 250g"
   ],
-  "actualizat": "2026-11-25 10:19"
+  "actualizat": "2026-11-25 11:20"
 }
