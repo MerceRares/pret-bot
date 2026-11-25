@@ -16,7 +16,7 @@
     "Cafea Irish Cream 1kg": 218.0,
     "Cafea Irish Cream 250g": 62.0,
     "Cafea Hazelnut Cinnamon 250g": 65.0,
-    "Cafea Pistachio Cream 250g": 62.0,
+    "Cafea Pistachio Cream 250g": 65.0,
     "Cafea Strawberry Cheesecake 250g": 65.0,
     "Cafea Turkish Honey 250g": 62.0,
     "Cafea Pistachio Dubai 250g": 65.0,
@@ -49,16 +49,11 @@
     "Hanorac Golden State Warriors": 379.0
   },
   "erori": [
-    "Cafea Pistachio Cream 250g",
-    "Cafea Caramel Choco 250g",
-    "Cafea Gingerbread",
-    "Cafea Sweet Orange Vanilla 250g",
     "Cafea English Caramel 250g",
     "Cafea Strawberry Cheesecake 250g",
     "Cafea Turkish Honey 250g",
     "Cafea Chocolate Orange 1kg",
-    "Cafea Happy Hazelnut 1kg",
-    "Cafea Happy Hazelnut 250g"
+    "Cafea Chili Chocolate 250g"
   ],
-  "actualizat": "2026-11-25 14:19"
+  "actualizat": "2026-11-25 15:19"
 }
